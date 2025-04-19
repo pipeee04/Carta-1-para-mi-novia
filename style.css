@@ -1,0 +1,284 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: linear-gradient(135deg, #a1866f, #d7b9a5); /* Fondo degradado suave */
+  font-family: 'Arial', sans-serif;
+  overflow: auto; /* Permitir scroll si el contenido se desborda */
+  min-height: 100vh; /* Asegurar que el body ocupe al menos la altura de la ventana */
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: auto; /* Permitir que el contenedor crezca según el contenido */
+  padding: 40px 0; /* Agregar padding para evitar que el contenido se pegue a los bordes */
+  min-height: 100vh; /* Asegurar que el contenedor sea al menos tan alto como la ventana */
+}
+
+/* Texto "Presióname" */
+.presioname {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #c0392b;
+  background-color: #fffaf0;
+  padding: 15px 30px;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.presioname:hover {
+  transform: scale(1.15);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Estilos para el sobre */
+.sobre {
+  width: 450px;
+  height: 280px;
+  position: relative;
+  cursor: pointer;
+  margin-top: 30px;
+  transform-origin: top;
+  transition: transform 1.5s ease-out, scale 0.5s ease;
+  perspective: 2000px; /* Efecto 3D más pronunciado */
+  display: none; /* Oculto hasta que se presione */
+  z-index: 1;
+}
+
+.solapa {
+  width: 100%;
+  height: 120px;
+  background: #e74c3c; /* Rojo romántico */
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+}
+
+.frente {
+  width: 100%;
+  height: 160px;
+  background: #c0392b; /* Rojo suave */
+  position: absolute;
+  top: 120px;
+  left: 0;
+  z-index: 2;
+}
+
+.cuerpo {
+  width: 100%;
+  height: 120px;
+  background: #c0392b;
+  position: absolute;
+  top: 160px;
+  left: 0;
+  z-index: 1;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  border-top: 3px solid #c0392b;
+}
+
+/* Animación para abrir el sobre */
+.sobre.abierto {
+  transform: scale(1.1); /* Ligero aumento de escala para dramatismo */
+}
+
+.sobre.abierto .solapa {
+  transform: rotateX(-180deg);
+  animation: abrirSolapa 1.5s ease-out;
+}
+
+.sobre.abierto .frente {
+  transform: rotateX(-180deg);
+  animation: abrirFrente 1.8s ease-out;
+}
+
+.sobre.abierto .cuerpo {
+  transform: rotateX(90deg);
+  animation: abrirCuerpo 1.3s ease-out;
+}
+
+/* Animaciones de apertura del sobre */
+@keyframes abrirSolapa {
+  0% { transform: rotateX(0); }
+  100% { transform: rotateX(-180deg); }
+}
+
+@keyframes abrirFrente {
+  0% { transform: rotateX(0); }
+  100% { transform: rotateX(-180deg); }
+}
+
+@keyframes abrirCuerpo {
+  0% { transform: rotateX(0); }
+  100% { transform: rotateX(90deg); }
+}
+
+/* Estilo del mensaje */
+.mensaje {
+  display: none;
+  background: #fef9e7;
+  padding: 40px;
+  border-radius: 15px;
+  max-width: 700px; /* Aumentado para el mensaje más largo */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 2.5s ease forwards;
+  text-align: center;
+  margin-top: -100px; /* Sobreponer al sobre */
+  border: 2px solid #f1c1b7; /* Borde decorativo */
+  z-index: 5; /* Asegurar que esté encima del sobre */
+}
+
+.mensaje p {
+  font-family: 'Parisienne', cursive;
+  font-size: 1.4rem; /* Reducido ligeramente para ajustar el contenido */
+  white-space: pre-line;
+  color: #c0392b;
+  line-height: 1.8; /* Mejor espaciado para legibilidad */
+  animation: escribir 5s steps(100, end) forwards;
+}
+
+@keyframes escribir {
+  0% { max-height: 0; }
+  100% { max-height: 1000px; } /* Aumentado para asegurar que todo el texto sea visible */
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Flores y partículas románticas */
+.decoracion {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.flor, .mariposa {
+  position: absolute;
+  font-size: 3rem;
+  animation: flotar 10s ease-in-out infinite;
+  opacity: 0.9;
+}
+
+.mariposa {
+  font-size: 2.8rem;
+  animation: volar 12s ease-in-out infinite;
+}
+
+@keyframes flotar {
+  0% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-30px) rotate(15deg); }
+  100% { transform: translateY(0) rotate(0deg); }
+}
+
+@keyframes volar {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(-25px, -40px) rotate(20deg); }
+  50% { transform: translate(15px, -60px) rotate(-15deg); }
+  75% { transform: translate(25px, -40px) rotate(15deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+/* Media Queries para dispositivos móviles */
+@media (max-width: 768px) {
+  .presioname {
+      font-size: 1.8rem; /* Reducir tamaño del texto en móviles */
+      padding: 10px 20px;
+  }
+
+  .sobre {
+      width: 300px; /* Reducir tamaño del sobre en móviles */
+      height: 200px;
+  }
+
+  .solapa {
+      height: 80px;
+  }
+
+  .frente {
+      height: 120px;
+      top: 80px;
+  }
+
+  .cuerpo {
+      height: 80px;
+      top: 120px;
+  }
+
+  .mensaje {
+      max-width: 90%; /* Usar un porcentaje para ajustar al ancho de la pantalla */
+      padding: 20px;
+      margin-top: -80px; /* Ajustar la superposición en móviles */
+  }
+
+  .mensaje p {
+      font-size: 1.2rem; /* Reducir tamaño de fuente para mejor ajuste */
+      line-height: 1.6;
+  }
+
+  .flor, .mariposa {
+      font-size: 2rem; /* Reducir tamaño de las decoraciones */
+  }
+
+  .mariposa {
+      font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .presioname {
+      font-size: 1.5rem;
+      padding: 8px 16px;
+  }
+
+  .sobre {
+      width: 250px;
+      height: 160px;
+  }
+
+  .solapa {
+      height: 60px;
+  }
+
+  .frente {
+      height: 100px;
+      top: 60px;
+  }
+
+  .cuerpo {
+      height: 60px;
+      top: 100px;
+  }
+
+  .mensaje {
+      padding: 15px;
+      margin-top: -60px;
+  }
+
+  .mensaje p {
+      font-size: 1rem;
+  }
+
+  .flor, .mariposa {
+      font-size: 1.5rem;
+  }
+
+  .mariposa {
+      font-size: 1.3rem;
+  }
+}
